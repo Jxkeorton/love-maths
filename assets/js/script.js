@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
-                alert(`You clicked ${gameType}`);
                 runGame(gameType)
             }
         })
@@ -33,9 +32,9 @@ function runGame(gameType) {
         displayAdditionQuestion(num1, num2);
     } else if (gameType === "subtract"){
         displaySubtractQuestion(num1, num2);
-    } else if (gameType === "divide"){
-        displayDivideQuestion(num1, num2);
     } else if (gameType === "division"){
+        displayDivideQuestion(num1, num2);
+    } else if (gameType === "multiply"){
         displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`)
@@ -54,9 +53,9 @@ function checkAnswer(){
     let isCorrect = userAnswer === calculatedAnswer[0];
 
     if(isCorrect) {
-        alert("Hey! you got it right :O")
+        incrementScore();
     } else {
-        alert(`aaaaa.... you answered ${userAnswer}. the correct answer was ${calculatedAnswer[0]}`);
+        incrementWrongAnswer();
     }
 
     runGame(calculatedAnswer[1]);
@@ -87,12 +86,22 @@ function calculateCorrectAnswer(){
 
 }
 
+/**
+ * Gets the current score from the DOM and increments it by 1
+ * 
+ */
 function incrementScore(){
-
+    let oldScore = parseInt(document.getElementById('score').innerText);
+    document.getElementById('score').innerText = ++oldScore;
 }
 
+/**
+ * Gets the current incorrect answer score from the DOM and increments it by 1
+ * 
+ */
 function incrementWrongAnswer(){
-
+    let oldScore = parseInt(document.getElementById('incorrect').innerText);
+    document.getElementById('incorrect').innerText = ++oldScore;
 }
 
 function displayAdditionQuestion(operand1, operand2){
