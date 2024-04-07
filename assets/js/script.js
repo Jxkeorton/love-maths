@@ -47,7 +47,24 @@ function checkAnswer(){
 
 }
 
+/**
+ * Gets the operands (numbers) and the operator
+ * directly from the dom, and returns the answer.
+ */
 function calculateCorrectAnswer(){
+
+    let operand1 = parseInt(document.getElementById('operand1').innerText);
+    let operand2 = parseInt(document.getElementById('operand2').innerText);
+    let operator = document.getElementById('operator').innerText;
+
+    if(operator === '+') {
+        return [operand1, operand2, "addition"];
+    } else if(operator === '-') {
+        return [operand1, operand2, "addition"];
+    } else {
+        alert(`unknown operator: ${operator}`);
+        throw `unknown operator: ${operator}. Aborting!`;
+    }
 
 }
 
