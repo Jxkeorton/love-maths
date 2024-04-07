@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
     for (let button of buttons){
         button.addEventListener('click', function(){
             if(this.getAttribute("data-type") === "submit"){
-                alert("You clicked submit!")
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
                 alert(`You clicked ${gameType}`);
@@ -35,7 +35,7 @@ function runGame(gameType) {
         displaySubtractQuestion(num1, num2);
     } else if (gameType === "divide"){
         displayDivideQuestion(num1, num2);
-    } else if (gameType === "divide"){
+    } else if (gameType === "division"){
         displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`)
@@ -43,8 +43,23 @@ function runGame(gameType) {
     }
 }
 
+/**
+ * checks the answer against the first element in
+ * the returned calculateCorrect Answer array
+ */
 function checkAnswer(){
 
+    let userAnswer = parseInt(document.getElementById('answer-box').value);
+    let calculatedAnswer = calculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
+
+    if(isCorrect) {
+        alert("Hey! you got it right :O")
+    } else {
+        alert(`aaaaa.... you answered ${userAnswer}. the correct answer was ${calculatedAnswer[0]}`);
+    }
+
+    runGame(calculatedAnswer[1]);
 }
 
 /**
@@ -58,10 +73,14 @@ function calculateCorrectAnswer(){
     let operator = document.getElementById('operator').innerText;
 
     if(operator === '+') {
-        return [operand1, operand2, "addition"];
+        return [operand1 + operand2, "addition"];
     } else if(operator === '-') {
-        return [operand1, operand2, "addition"];
-    } else {
+        return [operand1 - operand2, "subtract"];
+    } else if(operator === 'x') {
+        return [operand1 * operand2, "multiply"];
+    } else if(operator === '/') {
+        return [operand1 / operand2, "division"];
+    }else {
         alert(`unknown operator: ${operator}`);
         throw `unknown operator: ${operator}. Aborting!`;
     }
